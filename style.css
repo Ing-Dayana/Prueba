@@ -36,7 +36,10 @@ th {
 }
 
 @media (max-width: 767.98px) {
-  #tableContainer {
-    font-size: 12px !important;
-  }
+    #tableContainer {
+        font-size: 12px !important;
+    }
+    #fileInput{
+        font-size: 12px !important;
+    }
 }
