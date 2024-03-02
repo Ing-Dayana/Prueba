@@ -1,0 +1,38 @@
+.banner{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.51)), url(img/datos.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 70%;
+    margin: 0 auto;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 70%;
+    margin: 0 auto;
+    padding-top: 30px;
+    background-color: #ffffffbc;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #8bb6d6;
+}
+
+.highlight-red {
+    color: #e18383 !important;
+}
+
+.highlight-yellow {
+    background-color: #f5fe58 !important;
+}
+
+

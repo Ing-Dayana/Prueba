@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba Dayana</title>
+  <!--LINK CSS BOOTSTRAP-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <!--LINK CSS-->
+  <link rel="stylesheet" href="./style.css">
+  <!--BOOTSTRAP ICON -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+  <!--FAVICON-->
+  <link rel="shortcut icon" href="./img/favicon.png" class="rounded-circle" type="image/x-icon">
+</head>
+
+<body>
+  <div>
+    <div class="banner shadow bg-white rounded pb-5 ">
+      <div class="container mt-5 p-3 text-white">
+        <div class="container pt-5 text-center" id="bienvenida">
+          <h2 class="pt-3">¿Quieres organizar tu concentrado de datos?</h3>
+            <h5 class="pt-2">¡Da click en el botón de abajo!</h5>
+        </div>
+      </div>
+      <div class="container pt-5">
+        <div class="text-center">
+          <input class="btn btn-light" type="file" id="fileInput">
+        </div>
+      </div>
+    </div>
+    <div class="py-4" id="tableContainer"></div>
+  </div>
+
+  <script>
+    document.getElementById('fileInput').addEventListener('change', handleFile);
+
+    function handleFile(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        const content = e.target.result;
+        const lines = content.trim().split('\n');
+        //
+        const uniqueLines = [...new Set(lines)];
+
+        const tableContainer = document.getElementById('tableContainer');
+        const table = document.createElement('table');
+        const tbody = document.createElement('tbody');
+
+        uniqueLines.forEach(line => {
+          const [name, email, phone] = line.split(',');
+          const tr = document.createElement('tr');
+          const tdName = document.createElement('td');
+          const tdEmail = document.createElement('td');
+          const tdPhone = document.createElement('td');
+
+          tdName.textContent = name;
+          tdEmail.textContent = email;
+          tdPhone.textContent = phone;
+
+          //- Resalte con color rojo las líneas que contienen valores repetidos
+          if (lines.filter(l => l === line).length > 1) {
+            tr.classList.add('highlight-red');
+          }
+          //- Resalte con amarillo los valores que no son válidos (un correo electrónico no válido o un número de teléfono no válido [no 10 dígitos])
+          if (!isValidEmail(email) || !isValidPhone(phone)) {
+            tr.classList.add('highlight-yellow');
+          }
+
+          tr.appendChild(tdName);
+          tr.appendChild(tdEmail);
+          tr.appendChild(tdPhone);
+          tbody.appendChild(tr);
+        });
+
+        table.appendChild(tbody);
+        tableContainer.innerHTML = '';
+        tableContainer.appendChild(table);
+      };
+
+      reader.readAsText(file);
+    }
+
+    function isValidEmail(email) {
+      //Correo 
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function isValidPhone(phone) {
+      // Teléfono 
+      return /^\d{10}$/.test(phone);
+    }
+  </script>
+</body>
+
+</html>
